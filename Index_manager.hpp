@@ -31,6 +31,8 @@ public:
 	void create_index_string(const string& index_name,
 		vector<string> *key = NULL, vector<pair<int, int> > *position = NULL);
 	
+	void drop_table_all_index(const string& table_name);
+
 	void drop_index(const string& index_name);
 	void delete_index_int(const string& index_name);
 	void delete_index_char(const string& index_name);
@@ -38,18 +40,18 @@ public:
 	void delete_index_string(const string& index_name);
 	
 	bool single_search_int(const string& index_name,
-		int value, vector<pair<int, int> > &query_res, const int &logic = EQL);
+		int value, set<pair<int, int> > &query_res, const int &logic = EQL);
 	bool single_search_char(const string& index_name,
-		char value, vector<pair<int, int> > &query_res, const int &logic = EQL);
+		char value, set<pair<int, int> > &query_res, const int &logic = EQL);
 	bool single_search_float(const string& index_name,
-		float value, vector<pair<int, int> > &query_res, const int &logic = EQL);
+		float value, set<pair<int, int> > &query_res, const int &logic = EQL);
 	bool single_search_string(const string& index_name,
-		string value, vector<pair<int, int> > &query_res, const int &logic = EQL);
+		string value, set<pair<int, int> > &query_res, const int &logic = EQL);
 
-	void range_search_int(const string& index_name, int value_1, int value_2, vector<pair<int, int> > &query_res);
-	void range_search_char(const string& index_name, char value_1, char value_2, vector<pair<int, int> > &query_res);
-	void range_search_float(const string& index_name, float value_1, float value_2, vector<pair<int, int> > &query_res);
-	void range_search_string(const string& index_name, string value_1, string value_2, vector<pair<int, int> > &query_res);
+	void range_search_int(const string& index_name, int value_1, int value_2, set<pair<int, int> > &query_res);
+	void range_search_char(const string& index_name, char value_1, char value_2, set<pair<int, int> > &query_res);
+	void range_search_float(const string& index_name, float value_1, float value_2, set<pair<int, int> > &query_res);
+	void range_search_string(const string& index_name, string value_1, string value_2, set<pair<int, int> > &query_res);
 	
 	void insert_key_int(const string& index_name, int value, pair<int, int> record);
 	void insert_key_char(const string& index_name, char value, pair<int, int> record);

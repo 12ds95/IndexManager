@@ -90,6 +90,14 @@ void Index_manager::create_index_string(const string& index_name,
 	String_index.push_back(BPT);
 }
 
+void Index_manager::drop_table_all_index(const string& table_name)
+{
+	vector<string> all_index;
+	cm->getTableIndex(table_name, all_index);
+	for (size_t i = 0; i < all_index.size(); i++)
+		drop_index(all_index[i]);
+}
+
 void Index_manager::drop_index(const string& index_name)
 {
 	pair<int, size_t> index_info;
@@ -146,7 +154,7 @@ void Index_manager::delete_index_string(const string& index_name)
 }
 
 bool Index_manager::single_search_int(const string& index_name,
-	int value, vector<pair<int, int> > &query_res, const int &logic)
+	int value, set<pair<int, int> > &query_res, const int &logic)
 {
 	for (vector<BplusTree<int> >::iterator it = Int_index.begin(); it != Int_index.end(); it++)
 		if (it->index_name == index_name){
@@ -166,7 +174,7 @@ bool Index_manager::single_search_int(const string& index_name,
 }
 
 bool Index_manager::single_search_char(const string& index_name, 
-	char value, vector<pair<int, int> > &query_res, const int &logic)
+	char value, set<pair<int, int> > &query_res, const int &logic)
 {
 	for (vector<BplusTree<char> >::iterator it = Char_index.begin(); it != Char_index.end(); it++)
 		if (it->index_name == index_name){
@@ -186,7 +194,7 @@ bool Index_manager::single_search_char(const string& index_name,
 }
 
 bool Index_manager::single_search_float(const string& index_name,
-	float value, vector<pair<int, int> > &query_res, const int &logic)
+	float value, set<pair<int, int> > &query_res, const int &logic)
 {
 	for (vector<BplusTree<float> >::iterator it = Float_index.begin(); it != Float_index.end(); it++)
 		if (it->index_name == index_name){
@@ -206,7 +214,7 @@ bool Index_manager::single_search_float(const string& index_name,
 }
 
 bool Index_manager::single_search_string(const string& index_name,
-	string value, vector<pair<int, int> > &query_res, const int &logic)
+	string value, set<pair<int, int> > &query_res, const int &logic)
 {
 	for (vector<BplusTree<string> >::iterator it = String_index.begin(); it != String_index.end(); it++)
 		if (it->index_name == index_name){
@@ -225,7 +233,7 @@ bool Index_manager::single_search_string(const string& index_name,
 	return query_res.empty();
 }
 
-void Index_manager::range_search_int(const string& index_name, int value_1, int value_2, vector<pair<int, int> > &query_res)
+void Index_manager::range_search_int(const string& index_name, int value_1, int value_2, set<pair<int, int> > &query_res)
 {
 	for (vector<BplusTree<int> >::iterator it = Int_index.begin(); it != Int_index.end(); it++)
 		if (it->index_name == index_name){
@@ -234,7 +242,7 @@ void Index_manager::range_search_int(const string& index_name, int value_1, int 
 		}
 }
 
-void Index_manager::range_search_char(const string& index_name, char value_1, char value_2, vector<pair<int, int> > &query_res)
+void Index_manager::range_search_char(const string& index_name, char value_1, char value_2, set<pair<int, int> > &query_res)
 {
 	for (vector<BplusTree<char> >::iterator it = Char_index.begin(); it != Char_index.end(); it++)
 		if (it->index_name == index_name){
@@ -243,7 +251,7 @@ void Index_manager::range_search_char(const string& index_name, char value_1, ch
 		}
 }
 
-void Index_manager::range_search_float(const string& index_name, float value_1, float value_2, vector<pair<int, int> > &query_res)
+void Index_manager::range_search_float(const string& index_name, float value_1, float value_2, set<pair<int, int> > &query_res)
 {
 	for (vector<BplusTree<float> >::iterator it = Float_index.begin(); it != Float_index.end(); it++)
 		if (it->index_name == index_name){
@@ -252,7 +260,7 @@ void Index_manager::range_search_float(const string& index_name, float value_1, 
 		}
 }
 
-void Index_manager::range_search_string(const string& index_name, string value_1, string value_2, vector<pair<int, int> > &query_res)
+void Index_manager::range_search_string(const string& index_name, string value_1, string value_2, set<pair<int, int> > &query_res)
 {
 	for (vector<BplusTree<string> >::iterator it = String_index.begin(); it != String_index.end(); it++)
 		if (it->index_name == index_name){
